@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "moment": "^2.20.1",
+    "mongodb": "^3.0.2",
+    "telegraf": "^3.17.7"
+  }
+}
