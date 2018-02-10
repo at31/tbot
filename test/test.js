@@ -27,12 +27,12 @@ describe('Mongo', function() {
 			};
 
 			MongoHelper(DB_URL, DB_NAME, COLLECTION_NAME)//.should.eventually.to.be.an('object');
-      .then(doc=>{
-        expect(doc).to.be.a('object');
-        done();
-      }).catch(err=>{
-        done(err);
-      })
+				.then(doc=>{
+					expect(doc).to.be.a('object');
+					done();
+				}).catch(err=>{
+					done(err);
+				});
 
 		});
 	});

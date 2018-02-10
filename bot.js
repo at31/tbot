@@ -9,6 +9,9 @@ const DB_URL = 'mongodb://localhost:27017';
 const DB_NAME = 'tbot';
 const COLLECTION_NAME = 'diaryinfo';
 console.log('bot starts');
+const replys = require('./replys/replys');
+
+console.log(replys);
 /*
 bot.start((ctx) => {
   console.log('started:', ctx.from.id)
@@ -43,21 +46,7 @@ let MongoHelper = function (dbURL, dbName, collectionName){
 	});
 };
 
-function reply1(doc){
-	let replyStr = `📅<b>${doc.title}</b>\r\n`;
-	doc.data.forEach((el)=>{
-		let startDate = moment.unix(el.startDate/1000).format('HH:MM');
-		let endDate = moment.unix(el.stopDate/1000).format('HH:MM');
-		let theme = el.theme===null ? 'нет' : el.theme;
-		let homework = el.homework===null ? 'нет' : el.homework;
-		let irs =
-    `${el.number}) <b>${el.subject.name}</b> ⏰ ${startDate}-${endDate}
-    💡Тема: ${theme}
-    📗Дом.работа:${homework}\n`;
-		replyStr = replyStr + irs;
-	});
-	return replyStr;
-}
+
 
 /*let MongoConnect = function (url) {
   MongoClient.connect(url)
@@ -68,7 +57,27 @@ bot.hears(/(start)-(\d+)-(\d+)/i, (ctx) => {
 	MongoHelper(DB_URL, DB_NAME, COLLECTION_NAME).then(collection=>{
 		collection.findOne({studentID}).then((doc)=>{
 			let _doc = doc.pdata.filter((el)=>{ return el.id===dayNom;})[0];
-			ctx.reply(reply1(_doc, dayNom), Extra.HTML());
+			ctx.reply(replys.replyAll(_doc), Extra.HTML());
+		});
+	});
+});
+bot.hears('темы', (ctx) => {
+	let dayNom = parseInt(ctx.match[3]);
+	let studentID = ctx.match[2];
+	MongoHelper(DB_URL, DB_NAME, COLLECTION_NAME).then(collection=>{
+		collection.findOne({studentID}).then((doc)=>{
+			let _doc = doc.pdata.filter((el)=>{ return el.id===dayNom;})[0];
+			ctx.reply(replys.replyTheme(_doc), Extra.HTML());
+		});
+	});
+});
+bot.hears('расписание', (ctx) => {
+	let dayNom = parseInt(ctx.match[3]);
+	let studentID = ctx.match[2];
+	MongoHelper(DB_URL, DB_NAME, COLLECTION_NAME).then(collection=>{
+		collection.findOne({studentID}).then((doc)=>{
+			let _doc = doc.pdata.filter((el)=>{ return el.id===dayNom;})[0];
+			ctx.reply(replys.replyShedule(_doc), Extra.HTML());
 		});
 	});
 });
