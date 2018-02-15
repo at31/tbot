@@ -12,27 +12,10 @@ console.log('bot starts');
 const replys = require('./replys/replys');
 
 console.log(replys);
-/*
-bot.start((ctx) => {
-  console.log('started:', ctx.from.id)
-  return ctx.reply('Welcome!')
-})
 
-MongoClient.connect(url).then(client=>{
-    client.db(dbName)
-      .collection(collectionName)
-      .findOne({})
-      .then(result=>{
-        console.log(result);
-      })
-      .catch(
-        (err)=>{
-          console.log(err);
-        }
-      );
-  });
-*/
 // https://t.me/VCLI_BOT?start=buy-200300      :tada:
+
+
 let MongoHelper = function (dbURL, dbName, collectionName){
 	return new Promise((resolve, reject)=>{
 		MongoClient.connect(dbURL, function (err, client) {
@@ -47,10 +30,6 @@ let MongoHelper = function (dbURL, dbName, collectionName){
 };
 
 
-
-/*let MongoConnect = function (url) {
-  MongoClient.connect(url)
-}*/
 bot.hears(/(start)-(\d+)-(\d+)/i, (ctx) => {
 	let dayNom = parseInt(ctx.match[3]);
 	let studentID = ctx.match[2];
@@ -82,11 +61,6 @@ bot.hears('расписание', (ctx) => {
 	});
 });
 
-bot.command('help', (ctx) => ctx.reply('Try send a sticker!'));
-bot.hears('hi', (ctx) => ctx.reply('Hey there!'));
-bot.hears(/(buy)-(\d+)/i, (ctx) => {
-	console.log(ctx.match);
-	ctx.reply(ctx.match[2]);
-});
 bot.on('sticker', (ctx) => ctx.reply('👍'));
+
 bot.startPolling();
