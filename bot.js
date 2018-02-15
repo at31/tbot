@@ -1,6 +1,6 @@
 const Telegraf = require('telegraf');
 const Extra = require('telegraf/extra');
-const bot = new Telegraf('521903905:AAHJf8mBwEEDZ-TcVq4PgIwuIN9Pupcy8i0');
+const bot = new Telegraf('X');
 const MongoClient = require('mongodb').MongoClient;
 const moment = require('moment');
 moment().format();
